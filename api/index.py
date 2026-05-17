@@ -87,6 +87,26 @@ async def health():
     return {"status": "ok", "game": "BİLMİŞ", "active_sessions": len(sessions)}
 
 
+@app.get("/api/debug")
+async def debug():
+    """Vercel hata ayıklama — env var ve import kontrolü."""
+    import os
+    import sys
+    result = {
+        "python": sys.version,
+        "env_has_key": bool(os.getenv("OPENROUTER_API_KEY")),
+        "env_key_prefix": (os.getenv("OPENROUTER_API_KEY") or "")[:8] + "...",
+        "fastapi_ok": True,
+    }
+    try:
+        from game import GameEngine
+        GameEngine()
+        result["engine"] = "ok"
+    except Exception as e:
+        result["engine"] = str(e)[:200]
+    return result
+
+
 @app.post("/api/new-game", response_model=GameResponse)
 async def new_game(req: NewGameRequest):
     try:
