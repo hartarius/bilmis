@@ -13,8 +13,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
-# GameEngine aynı dizindeki game.py'den
-from game import GameEngine
+# GameEngine lazy import — Vercel'de startup hatasını önler
+
+
+def _get_engine():
+    from game import GameEngine
+    return GameEngine()
 
 # ── FastAPI App (Vercel ASGI handler) ──────────────────────────────────
 
@@ -86,7 +90,7 @@ async def health():
 @app.post("/api/new-game", response_model=GameResponse)
 async def new_game(req: NewGameRequest):
     try:
-        engine = GameEngine()
+        engine = _get_engine()
     except ValueError as e:
         return JSONResponse({"error": str(e)}, status_code=500)
 
@@ -125,7 +129,7 @@ async def answer(req: AnswerRequest):
     session.history.append({"role": "user", "content": normalized})
 
     try:
-        engine = GameEngine()
+        engine = _get_engine()
         response, is_final = engine.ask_next(
             session.secret, session.history, session.question_count
         )
