@@ -1,0 +1,415 @@
+/* ═══════════════════════════════════════════════
+   BİLMİŞ — Koyu Mistik Tema
+   ═══════════════════════════════════════════════ */
+
+:root {
+    --bg: #0f0a1a;
+    --surface: #1a1333;
+    --surface-hover: #231a44;
+    --primary: #b44dff;
+    --primary-glow: #d49fff;
+    --accent: #ffd700;
+    --text: #e8e0f0;
+    --text-dim: #8a7fa0;
+    --success: #4cff8d;
+    --danger: #ff4d6a;
+    --radius: 16px;
+    --radius-sm: 10px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    background-image:
+        radial-gradient(ellipse at 50% 0%, rgba(180, 77, 255, 0.08) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 100%, rgba(255, 215, 0, 0.04) 0%, transparent 60%);
+    color: var(--text);
+    min-height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+#app {
+    width: 100%;
+    max-width: 420px;
+    padding: 20px;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ═══════════ Screens ═══════════ */
+.screen {
+    display: none;
+    flex-direction: column;
+    flex: 1;
+    justify-content: center;
+    animation: fadeSlideIn 0.35s ease;
+}
+
+.screen.active {
+    display: flex;
+}
+
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ═══════════ Başlangıç Ekranı ═══════════ */
+.logo {
+    font-size: 72px;
+    text-align: center;
+    animation: float 3s ease-in-out infinite;
+    user-select: none;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+h1 {
+    text-align: center;
+    font-size: 48px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px;
+    user-select: none;
+}
+
+.subtitle {
+    text-align: center;
+    color: var(--text-dim);
+    margin-bottom: 32px;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.input-group {
+    margin-bottom: 24px;
+}
+
+#secret-input {
+    width: 100%;
+    padding: 16px 18px;
+    background: var(--surface);
+    border: 2px solid transparent;
+    border-radius: var(--radius);
+    color: var(--text);
+    font-size: 17px;
+    transition: all 0.3s ease;
+    caret-color: var(--primary);
+}
+
+#secret-input::placeholder {
+    color: var(--text-dim);
+    opacity: 0.7;
+}
+
+#secret-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 24px rgba(180, 77, 255, 0.2);
+}
+
+.hint {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 10px;
+    text-align: center;
+    line-height: 1.5;
+}
+
+/* ═══════════ Buttons ═══════════ */
+.btn-primary {
+    width: 100%;
+    padding: 16px 24px;
+    background: linear-gradient(135deg, var(--primary), #7c3aed);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(180, 77, 255, 0.35);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 16px rgba(180, 77, 255, 0.25);
+}
+
+.btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* ═══════════ Soru Ekranı ═══════════ */
+.game-header {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.counter {
+    color: var(--text-dim);
+    font-size: 14px;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+#question-num {
+    color: var(--primary-glow);
+    font-weight: 700;
+}
+
+.thinking-indicator {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 8px 0 12px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    height: 20px;
+}
+
+.thinking-indicator.active {
+    opacity: 1;
+}
+
+.dot {
+    font-size: 10px;
+    color: var(--primary);
+    animation: blink 1.4s infinite;
+}
+
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes blink {
+    0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); }
+    40% { opacity: 1; transform: scale(1.2); }
+}
+
+.question-bubble {
+    background: var(--surface);
+    border: 1px solid rgba(180, 77, 255, 0.25);
+    border-radius: var(--radius);
+    padding: 24px 20px;
+    font-size: 17px;
+    line-height: 1.65;
+    margin-bottom: 24px;
+    min-height: 80px;
+    animation: bubbleIn 0.4s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes bubbleIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ═══════════ Cevap Butonları ═══════════ */
+.answers {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn-answer {
+    padding: 14px 20px;
+    border: 2px solid;
+    border-radius: var(--radius-sm);
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: transparent;
+}
+
+.btn-yes {
+    border-color: var(--success);
+    color: var(--success);
+}
+.btn-yes:hover {
+    background: rgba(76, 255, 141, 0.1);
+    transform: scale(1.02);
+}
+
+.btn-no {
+    border-color: var(--danger);
+    color: var(--danger);
+}
+.btn-no:hover {
+    background: rgba(255, 77, 106, 0.1);
+    transform: scale(1.02);
+}
+
+.btn-idk {
+    border-color: var(--text-dim);
+    color: var(--text-dim);
+}
+.btn-idk:hover {
+    background: rgba(138, 127, 160, 0.1);
+    transform: scale(1.02);
+}
+
+.btn-answer:active {
+    transform: scale(0.98);
+}
+
+.btn-answer:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ═══════════ Geçmiş ═══════════ */
+.history {
+    margin-top: 24px;
+    max-height: 150px;
+    overflow-y: auto;
+    font-size: 12px;
+    color: var(--text-dim);
+    padding: 0 4px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--surface) transparent;
+}
+
+.history-item {
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    line-height: 1.5;
+}
+
+.history-item strong {
+    color: var(--primary-glow);
+}
+
+/* ═══════════ Tahmin Ekranı ═══════════ */
+#reveal-screen {
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+}
+
+.reveal-animation {
+    font-size: 80px;
+    animation: scaleIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    user-select: none;
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0) rotate(-20deg);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+#reveal-screen h2 {
+    font-size: 32px;
+    background: linear-gradient(135deg, var(--accent), #ffaa00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 8px 0;
+}
+
+.revealed-answer {
+    background: var(--surface);
+    border: 2px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    font-size: 20px;
+    line-height: 1.6;
+    width: 100%;
+    animation: glow 2s ease-in-out infinite;
+}
+
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 15px rgba(255, 215, 0, 0.25);
+    }
+    50% {
+        box-shadow: 0 0 35px rgba(255, 215, 0, 0.5);
+    }
+}
+
+.secret-compare {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+}
+
+/* ═══════════ Toast (hata mesajları) ═══════════ */
+.toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--danger);
+    color: white;
+    padding: 12px 24px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 100;
+    max-width: 380px;
+    text-align: center;
+}
+
+.toast.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ═══════════ Responsive ═══════════ */
+@media (max-width: 380px) {
+    #app { padding: 16px; }
+    h1 { font-size: 40px; }
+    .logo { font-size: 60px; }
+    .question-bubble { padding: 20px 16px; font-size: 16px; }
+    .revealed-answer { font-size: 18px; padding: 16px; }
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>🔮 BİLMİŞ — Her Şeyi Bilen</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔮</text></svg>">
+</head>
+<body>
+    <div id="app">
+        <!-- ═══════════ BAŞLANGIÇ EKRANI ═══════════ -->
+        <div id="start-screen" class="screen active">
+            <div class="logo">🔮</div>
+            <h1>BİLMİŞ</h1>
+            <p class="subtitle">Aklından bir şey tut,<br>ben sorularımla bulayım!</p>
+            <div class="input-group">
+                <input 
+                    type="text" 
+                    id="secret-input" 
+                    placeholder="Aklından ne tuttun?"
+                    maxlength="100" 
+                    autocomplete="off"
+                    enterkeyhint="done">
+                <p class="hint">✨ Her şey olabilir: eşya, hayvan, ünlü, yer, film, karakter...</p>
+            </div>
+            <button id="start-btn" class="btn-primary">
+                <span class="btn-text">🔍 Başla</span>
+            </button>
+        </div>
+
+        <!-- ═══════════ SORU EKRANI ═══════════ -->
+        <div id="game-screen" class="screen">
+            <div class="game-header">
+                <div class="counter">Soru <span id="question-num">1</span>/20</div>
+                <div class="thinking-indicator" id="thinking">
+                    <span class="dot">●</span>
+                    <span class="dot">●</span>
+                    <span class="dot">●</span>
+                </div>
+            </div>
+            <div class="question-bubble" id="question-text"></div>
+            <div class="answers">
+                <button class="btn-answer btn-yes" data-answer="evet">
+                    ✅ <span>Evet</span>
+                </button>
+                <button class="btn-answer btn-no" data-answer="hayır">
+                    ❌ <span>Hayır</span>
+                </button>
+                <button class="btn-answer btn-idk" data-answer="bilmiyorum">
+                    🤷 <span>Bilmiyorum</span>
+                </button>
+            </div>
+            <div class="history" id="history"></div>
+        </div>
+
+        <!-- ═══════════ TAHMİN EKRANI ═══════════ -->
+        <div id="reveal-screen" class="screen">
+            <div class="reveal-animation">✨</div>
+            <h2>🎯 BİLMİŞ BİLDİ!</h2>
+            <div class="revealed-answer" id="revealed-answer"></div>
+            <div class="secret-compare" id="secret-compare"></div>
+            <button id="replay-btn" class="btn-primary">
+                <span class="btn-text">🔄 Tekrar Oyna</span>
+            </button>
+        </div>
+
+        <!-- ═══════════ HATA EKRANI ═══════════ -->
+        <div id="error-toast" class="toast"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
